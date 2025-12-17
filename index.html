@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KidCoin</title>
+  <link rel="preconnect" href="https://cdn.ably.com">
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Ably JS SDK -->
+  <script src="https://cdn.ably.com/lib/ably.min-1.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <h1>KidCoin</h1>
+    <nav class="nav">
+      <button id="nav-dashboard" class="nav-btn">Dashboard</button>
+      <button id="nav-profile" class="nav-btn">Profile</button>
+      <button id="nav-transfer" class="nav-btn">Transfer</button>
+      <button id="nav-settings" class="nav-btn">Settings</button>
+    </nav>
+  </header>
+
+  <main id="view-container">
+    <!-- Auth view -->
+    <section id="view-auth" class="view">
+      <div class="card">
+        <h2>Create your account</h2>
+        <p class="muted">Just a username, password, and picture. You’ll start with 500 KidCoins.</p>
+        <form id="signup-form">
+          <label>Username
+            <input id="signup-username" type="text" maxlength="24" required />
+          </label>
+          <label>Password
+            <input id="signup-password" type="password" minlength="6" required />
+          </label>
+          <label>Profile picture (URL)
+            <input id="signup-pic" type="url" placeholder="https://example.com/pic.png" />
+          </label>
+          <button type="submit" class="primary">Create account</button>
+        </form>
+        <hr />
+        <h3>Already created?</h3>
+        <form id="login-form">
+          <label>Username
+            <input id="login-username" type="text" required />
+          </label>
+          <label>Password
+            <input id="login-password" type="password" required />
+          </label>
+          <button type="submit" class="primary">Enter</button>
+        </form>
+        <p class="muted small">This site remembers you. There’s no sign-out.</p>
+      </div>
+    </section>
+
+    <!-- Dashboard view -->
+    <section id="view-dashboard" class="view hidden">
+      <div class="card">
+        <div class="profile-row">
+          <img id="dash-pic" class="avatar" alt="profile" />
+          <div>
+            <h2 id="dash-username"></h2>
+            <p id="dash-bio" class="muted"></p>
+          </div>
+        </div>
+        <div class="balance-row">
+          <h3>Balance</h3>
+          <div class="balance">
+            <span id="dash-balance">—</span> <span class="kc">KC</span>
+          </div>
+        </div>
+        <div>
+          <h3>Recent activity</h3>
+          <ul id="activity-list" class="list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile view -->
+    <section id="view-profile" class="view hidden">
+      <div class="card">
+        <h2>Your profile</h2>
+        <form id="profile-form">
+          <label>Bio
+            <textarea id="profile-bio" maxlength="160" placeholder="Say something short..."></textarea>
+          </label>
+          <label>Email
+            <input id="profile-email" type="email" placeholder="kid@example.com" />
+          </label>
+          <label>Phone
+            <input id="profile-phone" type="tel" placeholder="+1 555 000 1234" />
+          </label>
+          <label>Profile picture (URL)
+            <input id="profile-pic" type="url" placeholder="https://example.com/pic.png" />
+          </label>
+          <button type="submit" class="primary">Save profile</button>
+        </form>
+        <hr />
+        <h3>Find a profile</h3>
+        <form id="search-form" class="inline">
+          <input id="search-username" type="text" placeholder="Search username..." />
+          <button type="submit">Search</button>
+        </form>
+        <div id="search-result" class="search-result"></div>
+      </div>
+    </section>
+
+    <!-- Transfer view -->
+    <section id="view-transfer" class="view hidden">
+      <div class="card">
+        <h2>Send KidCoin</h2>
+        <form id="transfer-form">
+          <label>Recipient username
+            <input id="transfer-to" type="text" required />
+          </label>
+          <label>Amount
+            <input id="transfer-amount" type="number" min="1" max="100000" required />
+          </label>
+          <button type="submit" class="primary">Send</button>
+        </form>
+        <p class="muted small">Transfers are instant. If the recipient doesn’t exist, it will fail.</p>
+      </div>
+    </section>
+
+    <!-- Settings view -->
+    <section id="view-settings" class="view hidden">
+      <div class="card">
+        <h2>Settings</h2>
+
+        <h3>Theme</h3>
+        <div class="theme-grid">
+          <label class="theme-option">
+            <input type="radio" name="theme" value="light" /> Light
+          </label>
+          <label class="theme-option">
+            <input type="radio" name="theme" value="dark" /> Dark
+          </label>
+          <label class="theme-option">
+            <input type="radio" name="theme" value="mint" /> Mint
+          </label>
+        </div>
+
+        <h3>Privacy</h3>
+        <label class="switch">
+          <input id="settings-show-email" type="checkbox" />
+          <span>Show email on your public profile</span>
+        </label>
+        <label class="switch">
+          <input id="settings-show-phone" type="checkbox" />
+          <span>Show phone on your public profile</span>
+        </label>
+
+        <h3>Other</h3>
+        <label class="switch">
+          <input id="settings-sound" type="checkbox" />
+          <span>Sound effects on transfers</span>
+        </label>
+
+        <button id="settings-save" class="primary">Save settings</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <span>KidCoin • Realtime fun</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
